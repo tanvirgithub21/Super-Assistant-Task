@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { FaAngleRight } from "react-icons/fa";
 import Lottie from "lottie-web";
 import education from "./education.json";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const anime = useRef(null);
@@ -26,12 +27,18 @@ const Home = () => {
         </h3>
 
         <div className="flex items-center mt-10">
-          <button className="btn bg-blue-500 flex items-center justify-start">
+          <Link
+            to="/jdk"
+            className="btn bg-blue-500 flex items-center justify-start"
+          >
             Test now <FaAngleRight className="ml-2" />
-          </button>
-          <button className="btn bg-[#8E24AA] hover:bg-[#ae28d3] flex items-center justify-start ">
+          </Link>
+          <Link
+            to="/create-test"
+            className="btn bg-[#8E24AA] hover:bg-[#ae28d3] flex items-center justify-start "
+          >
             Create Test <FaAngleRight className="ml-2" />
-          </button>
+          </Link>
         </div>
 
         {/* lottie icon  */}
