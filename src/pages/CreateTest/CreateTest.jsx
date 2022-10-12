@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { BiMessageAltAdd } from "react-icons/bi";
 
 const CreateTest = () => {
+  const [questionType, setQuestionType] = useState("mcq");
+
   return (
     <div className="container mx-auto">
       <div className="max-w-[50rem] w-full mx-auto my-8">
@@ -10,7 +12,7 @@ const CreateTest = () => {
         </h1>
 
         {/* test Q */}
-        <div className="box-shadow p-2 my-4 min-h-[20rem]">
+        <div className="box-shadow-light dark:box-shadow-dark p-2 my-4 min-h-[20rem]">
           <div>
             {/* create test header  */}
             <div className="flex justify-between items-center">
@@ -19,7 +21,10 @@ const CreateTest = () => {
 
               {/* select question type */}
               <div>
-                <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-32 p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select
+                  onChange={(e) => setQuestionType(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-32 p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
                   <option value="mcq">MCQ</option>
                   <option value="short_text">Short Text</option>
                 </select>
@@ -65,34 +70,56 @@ const CreateTest = () => {
               </div>
 
               {/* mcq option 1-4 */}
-              <div className="grid grid-cols-2 gap-4 mt-5">
-                <input
-                  type="text"
-                  id="mcq_1"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Option 1"
-                  required
-                />
-                <input
-                  type="text"
-                  id="mcq_2"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Option 2"
-                  required
-                />
-                <input
-                  type="text"
-                  id="mcq_3"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Option 3"
-                />
-                <input
-                  type="text"
-                  id="mcq_4"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Option 4"
-                />
-              </div>
+              {questionType === "mcq" && (
+                <div className="grid grid-cols-2 gap-4 mt-5">
+                  <input
+                    type="text"
+                    id="mcq_1"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Option 1"
+                    required
+                  />
+                  <input
+                    type="text"
+                    id="mcq_2"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Option 2"
+                    required
+                  />
+                  <input
+                    type="text"
+                    id="mcq_3"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Option 3"
+                  />
+                  <input
+                    type="text"
+                    id="mcq_4"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Option 4"
+                  />
+                </div>
+              )}
+
+              {/* min max characters */}
+              {questionType === "short_text" && (
+                <div className="grid grid-cols-2 gap-4 mt-5">
+                  <input
+                    type="number"
+                    id="min_characters"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Min characters"
+                    required
+                  />
+                  <input
+                    type="number"
+                    id="max_characters"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Max characters"
+                    required
+                  />
+                </div>
+              )}
             </div>
 
             <button className="btn bg-red-400 mt-5 ">Reset</button>
