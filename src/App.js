@@ -3,6 +3,8 @@ import './App.css';
 import CreateTest from './pages/CreateTest/CreateTest';
 import Home from './pages/Home/Home';
 import Navbar from './SharedComponent/Navbar/Navbar';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -16,7 +18,7 @@ function App() {
           <Route path="/create-test" element={<CreateTest />} />
         </Routes>
 
-
+        <ToastContainer />
       </div>
     </div>
   );

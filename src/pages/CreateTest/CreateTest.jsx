@@ -1,13 +1,25 @@
 import React, { useState } from "react";
 import { BiMessageAltAdd } from "react-icons/bi";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const CreateTest = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const [questionType, setQuestionType] = useState("mcq");
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    await axios
+      .post("http://localhost:5000/question", data)
+      .then((res) => {
+        toast.success("Saved");
+        reset();
+      })
+      .catch(function (error) {
+        toast.error("Something Wrong");
+      });
+  };
 
   return (
     <div className="container mx-auto">
@@ -145,7 +157,9 @@ const CreateTest = () => {
                 )}
               </div>
 
-              <button className="btn bg-red-400 mt-5 ">Reset</button>
+              <button onClick={() => reset()} className="btn bg-red-400 mt-5 ">
+                Reset
+              </button>
             </div>
           </div>
 
