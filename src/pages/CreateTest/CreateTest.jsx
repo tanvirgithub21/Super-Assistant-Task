@@ -1,24 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { BiMessageAltAdd } from "react-icons/bi";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { questionStore } from "../../State/StateProvider";
 
 const CreateTest = () => {
+  const { questionData, onSubmit } = useContext(questionStore);
+
   const { register, handleSubmit, reset } = useForm();
 
   const [questionType, setQuestionType] = useState("mcq");
 
-  const onSubmit = async (data) => {
-    await axios
-      .post("http://localhost:5000/question", data)
-      .then((res) => {
-        toast.success("Saved");
-        reset();
-      })
-      .catch(function (error) {
-        toast.error("Something Wrong");
-      });
+  const uplodeQues = () => {
+    onSubmit();
+    reset();
   };
 
   return (
@@ -27,14 +23,14 @@ const CreateTest = () => {
         <h1 className="text-lg md:text-2xl font-semibold px-2 border-b-2 border-gray-400">
           Create Test
         </h1>
-        {/* test Q */}{" "}
-        <form onSubmit={handleSubmit(onSubmit)}>
+        {/* test Q */}
+        <form onSubmit={handleSubmit(uplodeQues)}>
           <div className="box-shadow-light dark:box-shadow-dark p-2 my-4 min-h-[20rem]">
             <div>
               {/* create test header  */}
               <div className="flex justify-between items-center">
                 {/* question NO */}
-                <span>Question No: 1</span>
+                <span>Question No: {questionData.length + 1}</span>
 
                 {/* select question type */}
                 <div>
