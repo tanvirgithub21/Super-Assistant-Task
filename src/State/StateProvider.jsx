@@ -33,8 +33,19 @@ const QuestionStoreProvider = ({ children }) => {
       .catch((err) => toast.error("Something Wrong"));
   }, [reFatch]);
 
+  // get single question Data by _id
+  const deletedQ = async (id) => {
+    axios
+      .delete(`http://localhost:5000/question/delete/${id}`)
+      .then((res) => {
+        toast.success(res?.data);
+        setReFatch(!reFatch);
+      })
+      .catch((err) => toast.error("Not Deleted"));
+  };
+
   //this state stored user data  //==> Don't move this one !
-  const userData = { questionData, onSubmit };
+  const userData = { questionData, onSubmit, deletedQ };
   //user context provider component //==> Don't move this one !
   return (
     <questionStore.Provider value={userData}>{children}</questionStore.Provider>
