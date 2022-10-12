@@ -6,6 +6,7 @@ import Navbar from './SharedComponent/Navbar/Navbar';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { QuestionStoreProvider } from './State/StateProvider';
+import Test from './pages/Test/Test';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/create-test" element={<CreateTest />} />
+            <Route path="/test" element={<Test />} />
           </Routes>
 
           <ToastContainer />

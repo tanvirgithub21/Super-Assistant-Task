@@ -28,7 +28,7 @@ const Home = () => {
 
         <div className="flex items-center mt-10">
           <Link
-            to="/jdk"
+            to="/test"
             className="btn bg-blue-500 flex items-center justify-start"
           >
             Test now <FaAngleRight className="ml-2" />

@@ -5,6 +5,26 @@ import { questionStore } from "../../State/StateProvider";
 import { MdDelete } from "react-icons/md";
 
 const CreateTest = () => {
+  const [option_1, setOption_1] = useState(false);
+  const [option_2, setOption_2] = useState(false);
+  const [option_3, setOption_3] = useState(false);
+  const [option_4, setOption_4] = useState(false);
+
+  const handleCorrectAnswer = (e) => {
+    if (e === "option_1") {
+      setOption_1(true);
+    } else setOption_1(false);
+    if (e === "option_2") {
+      setOption_2(true);
+    } else setOption_2(false);
+    if (e === "option_3") {
+      setOption_3(true);
+    } else setOption_3(false);
+    if (e === "option_4") {
+      setOption_4(true);
+    } else setOption_4(false);
+  };
+
   const { questionData, onSubmit, deletedQ } = useContext(questionStore);
 
   const { register, handleSubmit, reset } = useForm();
@@ -12,7 +32,35 @@ const CreateTest = () => {
   const [questionType, setQuestionType] = useState("mcq");
 
   const uplodeQues = (data) => {
-    onSubmit(data);
+    const {
+      question_title,
+      question_type,
+      point,
+      media,
+      mcq_1,
+      mcq_2,
+      mcq_3,
+      mcq_4,
+      min_characters,
+      max_characters,
+    } = data;
+
+    const finalData = {
+      question_title,
+      question_type,
+      point,
+      media,
+      min_characters,
+      max_characters,
+      answerOptions: [
+        { answerText: mcq_1, isCorrect: option_1 },
+        { answerText: mcq_2, isCorrect: option_2 },
+        { answerText: mcq_3, isCorrect: option_3 },
+        { answerText: mcq_4, isCorrect: option_4 },
+      ],
+    };
+    console.log(finalData);
+    onSubmit(finalData);
     reset();
   };
 
@@ -194,6 +242,87 @@ const CreateTest = () => {
                       />
                     </div>
                   )}
+                </div>
+
+                {/* Correct answer */}
+                <div>
+                  <h3 class="my-2 font-semibold text-gray-900 dark:text-white">
+                    Correct Answer
+                  </h3>
+                  <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                      <div class="flex items-center pl-3">
+                        <input
+                          onChange={(e) => handleCorrectAnswer(e.target.value)}
+                          id="option_1"
+                          type="radio"
+                          value="option_1"
+                          name="list-radio"
+                          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        />
+                        <label
+                          for="option_1"
+                          class="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >
+                          Option 1
+                        </label>
+                      </div>
+                    </li>
+                    <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                      <div class="flex items-center pl-3">
+                        <input
+                          onChange={(e) => handleCorrectAnswer(e.target.value)}
+                          id="option_2"
+                          type="radio"
+                          value="option_2"
+                          name="list-radio"
+                          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        />
+                        <label
+                          for="option_2"
+                          class="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >
+                          Option 2
+                        </label>
+                      </div>
+                    </li>
+                    <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                      <div class="flex items-center pl-3">
+                        <input
+                          onChange={(e) => handleCorrectAnswer(e.target.value)}
+                          id="option_3"
+                          type="radio"
+                          value="option_3"
+                          name="list-radio"
+                          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        />
+                        <label
+                          for="option_3"
+                          class="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >
+                          Option 3
+                        </label>
+                      </div>
+                    </li>
+                    <li class="w-full dark:border-gray-600">
+                      <div class="flex items-center pl-3">
+                        <input
+                          onChange={(e) => handleCorrectAnswer(e.target.value)}
+                          id="option_4"
+                          type="radio"
+                          value="option_4"
+                          name="list-radio"
+                          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        />
+                        <label
+                          for="option_4"
+                          class="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >
+                          Option 4
+                        </label>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
 
                 <button
