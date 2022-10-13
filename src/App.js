@@ -12,7 +12,7 @@ function App() {
   return (
     <QuestionStoreProvider>
       <div className='bg-gray-100 dark:bg-gray-900 dark:text-white'>
-        <div className='px-2 min-h-screen'>
+        <div className='min-h-screen'>
 
           <Navbar />
           <Routes>

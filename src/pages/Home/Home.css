@@ -1,0 +1,10 @@
+.home {
+  background-image: url("../../images/homeBg.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: calc(100vh - 68px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
