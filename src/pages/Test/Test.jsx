@@ -5,6 +5,7 @@ import cup from "../../images/cup.gif";
 import { Link } from "react-router-dom";
 
 import { useState } from "react";
+import Timer from "../../SharedComponent/Timer/Timer";
 
 const Test = () => {
   const { questionData } = useContext(questionStore);
@@ -28,6 +29,7 @@ const Test = () => {
       setShowScore(true);
     }
   };
+
   return (
     <div className="test ">
       <div className="w-full h-full dark:bg-[#060606f6]">
@@ -50,18 +52,24 @@ const Test = () => {
                     You scored {score} out of {totalPoint}
                   </h3>
                   <div className="flex justify-center">
-                    <div className="text-center btn bg-cyan-600 hover:bg-cyan-700">
+                    <div
+                      onClick={() => setShowScore(false)}
+                      className="text-center btn bg-cyan-600 hover:bg-cyan-700"
+                    >
                       <Link to="/home">back to home</Link>
                     </div>
                   </div>
                 </div>
               ) : (
                 <>
-                  <div>
-                    <span className=" font-semibold">
-                      Question {currentQuestion + 1}
-                    </span>
-                    /{questionData.length}
+                  <div className="flex justify-between">
+                    <div>
+                      <span className=" font-semibold">
+                        Question {currentQuestion + 1}
+                      </span>
+                      /{questionData.length}
+                    </div>
+                    <Timer timeEnd={setShowScore} />
                   </div>
                   <div>
                     <div className="text-xl capitalize font-semibold mb-6 ">
