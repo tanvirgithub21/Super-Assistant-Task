@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { questionStore } from "../../State/StateProvider";
 import "./Test.css";
+import cup from "../../images/cup.gif";
+import { Link } from "react-router-dom";
 
 import { useState } from "react";
 
@@ -37,9 +39,21 @@ const Test = () => {
             <div className="bg-gray-200 dark:bg-gray-800 max-w-[40rem] mx-auto p-3 rounded">
               {showScore ? (
                 <div>
-                  <h3>
+                  <div>
+                    <img
+                      className="w-auto h-32 md:h-52 mx-auto"
+                      src={cup}
+                      alt="cup"
+                    />
+                  </div>
+                  <h3 className="text-xl md:text-3xl text-gray-700 dark:text-gray-500 text-center  font-semibold mb-10">
                     You scored {score} out of {totalPoint}
                   </h3>
+                  <div className="flex justify-center">
+                    <div className="text-center btn bg-cyan-600 hover:bg-cyan-700">
+                      <Link to="/home">back to home</Link>
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <>
@@ -54,13 +68,14 @@ const Test = () => {
                       {"Q" +
                         (currentQuestion + 1) +
                         " " +
-                        questionData[currentQuestion].question_title}
+                        questionData[currentQuestion]?.question_title}
                     </div>
                   </div>
                   <div>
-                    {questionData[currentQuestion].answerOptions.map(
-                      (answerOption) => (
+                    {questionData[currentQuestion]?.answerOptions.map(
+                      (answerOption, index) => (
                         <p
+                          key={index}
                           onClick={() => {
                             handleAnswerOptionClick(
                               answerOption.isCorrect,
