@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { QuestionStoreProvider } from './State/StateProvider';
 import Test from './pages/Test/Test';
 import Login from './pages/Login/Login';
+import RequireAuth from './SharedComponent/RequireAuth';
 
 function App() {
   return (
@@ -20,8 +21,12 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/create-test" element={<CreateTest />} />
-            <Route path="/test" element={<Test />} />
+            <Route path="/create-test" element={<RequireAuth>
+              <CreateTest />
+            </RequireAuth>} />
+            <Route path="/test" element={<RequireAuth>
+              <Test />
+            </RequireAuth>} />
           </Routes>
 
           <ToastContainer />

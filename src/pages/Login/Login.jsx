@@ -3,10 +3,16 @@ import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import auth from "../../firebase.init.js";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.form?.pathname || "/";
+
   // login user and update data to database
   const googleProvider = new GoogleAuthProvider();
+
   const googleSingIn = () => {
     signInWithPopup(auth, googleProvider)
       .then(async (result) => {
@@ -16,6 +22,7 @@ const Login = () => {
           .put(`http://localhost:5000/userInfo/${user.email}`)
           .then((res) => {
             res && toast.success("Login Successfully");
+            navigate(from, { replace: true });
           })
           .catch((err) => {
             err.message && toast.error("Login Field");

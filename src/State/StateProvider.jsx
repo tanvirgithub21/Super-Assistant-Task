@@ -5,13 +5,10 @@ import { createContext } from "react";
 import { toast } from "react-toastify";
 import { onAuthStateChanged } from "firebase/auth";
 import auth from "../firebase.init";
-import { useNavigate } from "react-router-dom";
 
 const questionStore = createContext();
 
 const QuestionStoreProvider = ({ children }) => {
-  const navigate = useNavigate();
-
   const [questionData, setQuestionData] = useState([]);
   const [user, setUser] = useState({});
   const [reFetch, setReFetch] = useState(true);
@@ -22,12 +19,6 @@ const QuestionStoreProvider = ({ children }) => {
       setUser(user);
     }
   });
-
-  // check user login or not
-  useEffect(() => {
-    user?.email ? navigate("/home") : navigate("/login");
-    console.log(user);
-  }, [user]);
 
   // post question Data
   const onSubmit = async (data) => {
