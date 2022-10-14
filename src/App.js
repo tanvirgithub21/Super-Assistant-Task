@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { QuestionStoreProvider } from './State/StateProvider';
 import Test from './pages/Test/Test';
+import Login from './pages/Login/Login';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/create-test" element={<CreateTest />} />
             <Route path="/test" element={<Test />} />
           </Routes>
