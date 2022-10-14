@@ -69,7 +69,7 @@ const Test = () => {
                       </span>
                       /{questionData.length}
                     </div>
-                    <Timer timeEnd={setShowScore} />
+                    {/* <Timer timeEnd={setShowScore} /> */}
                   </div>
                   <div>
                     <div className="text-xl capitalize font-semibold mb-6 ">
