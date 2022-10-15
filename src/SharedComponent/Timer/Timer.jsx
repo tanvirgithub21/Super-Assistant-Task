@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 const Timer = ({ timeEnd }) => {
-  const [time, setTime] = useState(15 * 60 * 1000);
+  const [time, setTime] = useState(1 * 60 * 1000);
 
   useEffect(() => {
     setTimeout(() => {
@@ -21,8 +21,6 @@ const Timer = ({ timeEnd }) => {
 
     const second = parseInt(totalSecond % 60);
     const min = parseInt(totalMin % 60);
-
-    console.log(`Time: ${min}:${second} `);
 
     return `Time: ${min}:${second} `;
   };

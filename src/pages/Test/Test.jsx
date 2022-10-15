@@ -1,23 +1,38 @@
 import React, { useContext } from "react";
 import { questionStore } from "../../State/StateProvider";
 import "./Test.css";
-import cup from "../../images/cup.gif";
-import { Link } from "react-router-dom";
-
 import { useState } from "react";
 import Timer from "../../SharedComponent/Timer/Timer";
+import axios from "axios";
+import { toast } from "react-toastify";
+import ShowScore from "./ShowScore";
 
 const Test = () => {
-  const { questionData } = useContext(questionStore);
+  const { questionData, user } = useContext(questionStore);
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showScore, setShowScore] = useState(false);
 
-  const [totalPoint, setTotalPoint] = useState(0);
+  const sourceUpdateDB = async (totalPoint, score) => {
+    await axios
+      .put(`http://localhost:5000/userInfo/${user?.email}`, {
+        totalPoint,
+        score,
+      })
+      .then((res) => {
+        res && toast.success("ok");
+      })
+      .catch((err) => {
+        err.message && toast.error("ree");
+      });
+  };
+
+  const [totalPoint, setTotalPoint] = useState(
+    questionData[questionData.length - 1]?.totalPoint
+  );
   const [score, setScore] = useState(0);
 
   const handleAnswerOptionClick = (isCorrect, point) => {
-    setTotalPoint(parseInt(totalPoint) + parseInt(point));
     if (isCorrect) {
       setScore(parseInt(score) + parseInt(point));
     }
@@ -40,26 +55,12 @@ const Test = () => {
           <div>
             <div className="bg-gray-200 dark:bg-gray-800 max-w-[40rem] mx-auto p-3 rounded">
               {showScore ? (
-                <div>
-                  <div>
-                    <img
-                      className="w-auto h-32 md:h-52 mx-auto"
-                      src={cup}
-                      alt="cup"
-                    />
-                  </div>
-                  <h3 className="text-xl md:text-3xl text-gray-700 dark:text-gray-500 text-center  font-semibold mb-10">
-                    You scored {score} out of {totalPoint}
-                  </h3>
-                  <div className="flex justify-center">
-                    <div
-                      onClick={() => setShowScore(false)}
-                      className="text-center btn bg-cyan-600 hover:bg-cyan-700"
-                    >
-                      <Link to="/home">back to home</Link>
-                    </div>
-                  </div>
-                </div>
+                <ShowScore
+                  setShowScore={setShowScore}
+                  score={score}
+                  totalPoint={totalPoint}
+                  sourceUpdateDB={sourceUpdateDB}
+                />
               ) : (
                 <>
                   <div className="flex justify-between">
@@ -69,7 +70,7 @@ const Test = () => {
                       </span>
                       /{questionData.length}
                     </div>
-                    {/* <Timer timeEnd={setShowScore} /> */}
+                    <Timer timeEnd={setShowScore} />
                   </div>
                   <div>
                     <div className="text-xl capitalize font-semibold mb-6 ">

@@ -55,7 +55,7 @@ const QuestionStoreProvider = ({ children }) => {
   };
 
   //this state stored user data  //==> Don't move this one !
-  const userData = { questionData, onSubmit, deletedQ, userEmail: user };
+  const userData = { questionData, onSubmit, deletedQ, user };
   //user context provider component //==> Don't move this one !
   return (
     <questionStore.Provider value={userData}>{children}</questionStore.Provider>
