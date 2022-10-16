@@ -25,7 +25,8 @@ const CreateTest = () => {
     } else setOption_4(false);
   };
 
-  const { questionData, onSubmit, deletedQ } = useContext(questionStore);
+  const { questionData, onSubmit, deletedQ, allUserData } =
+    useContext(questionStore);
 
   const { register, handleSubmit, reset } = useForm();
 
@@ -350,6 +351,45 @@ const CreateTest = () => {
               </button>
             </div>
           </form>
+        </div>
+
+        {/* table  */}
+        <div class="overflow-x-auto relative shadow-md sm:rounded-lg min-w-[12.5rem] md:min-h-[calc(100vh-68px)] md:max-w-[26rem] md:overflow-y-auto mr-5">
+          <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" class="py-3 px-3 whitespace-nowrap">
+                  No
+                </th>
+                <th scope="col" class="py-3 px-3">
+                  User Email
+                </th>
+                <th scope="col" class="py-3 px-3 ">
+                  Score
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {allUserData.map((data, index) => (
+                <tr
+                  key={data?._id}
+                  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                >
+                  <td class="py-3 px-3 font-bold">{index + 1}</td>
+                  <td class="py-3 px-3">{data?.email}</td>
+                  <td class="py-3 px-3 text-right">
+                    {data?.result ? (
+                      <span>
+                        {data?.result?.score} out of {data?.result?.totalPoint}
+                      </span>
+                    ) : (
+                      <span>No Data...</span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
