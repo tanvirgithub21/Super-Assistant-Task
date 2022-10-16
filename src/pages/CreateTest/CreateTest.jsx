@@ -60,7 +60,7 @@ const CreateTest = () => {
         { answerText: mcq_4, isCorrect: option_4 },
       ],
     };
-    console.log(finalData);
+
     onSubmit(finalData);
     reset();
   };
