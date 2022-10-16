@@ -1,7 +1,6 @@
 import React from "react";
 
 const Model = ({ handleSingIn, openModel, setOpenModel }) => {
-  console.log("hit2");
   return (
     <div className="min-w-full min-h-full bg-[#0000009f] absolute top-0 left-0 flex justify-center items-center">
       <div className="max-w-[20rem] w-full bg-[#ffffff] border-2 rounded-md shadow-md p-3 ">
