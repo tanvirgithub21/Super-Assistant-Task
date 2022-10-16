@@ -1,86 +1,118 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { questionStore } from "../../State/StateProvider";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { BsPlusLg } from "react-icons/bs";
+import auth from "../../firebase.init";
+import { signOut } from "firebase/auth";
 
-const Navbar = () => {
+export default function Navbar({ fixed }) {
+  const [navbarOpen, setNavbarOpen] = useState(false);
+
+  // sing out function
+  const logout = () => {
+    signOut(auth);
+  };
+
+  const { userDataDB, user } = useContext(questionStore);
+  const userType = userDataDB?.userType;
+
+  //navbar active or deActive color style
+  const active =
+    " font-semibold text-violet-600 dark:text-white dark:bg-[#1F2937] text-[17px]  flex items-center mr-5 my-1 md:my-0 ";
+  const deActive =
+    " dark:text-[#8C9BB6]  font-semibold text-[#273272] flex items-center text-[17px]  mr-5  my-1 md:my-0";
+
   return (
     <>
-      <nav className="px-2 sm:px-4 py-2.5 bg-white border-gray-200 dark:bg-gray-900">
-        <div className="container mx-auto h-12 flex flex-wrap justify-between items-center">
-          <a href="https://flowbite.com/" className="flex items-center">
-            <span className="self-center text-xl uppercase font-bold whitespace-nowrap dark:text-[#38BDF8] text-violet-600">
-              Super-<span className="text-gray-900">Assistant</span>
-            </span>
-          </a>
-          <button
-            data-collapse-toggle="navbar-default"
-            type="button"
-            className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            aria-controls="navbar-default"
-            aria-expanded="false"
-          >
-            <span className="sr-only">Open main menu</span>
-            <svg
-              className="w-6 h-6"
-              aria-hidden="true"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
+      <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-white shadow-2 shadow-black border-b-2">
+        <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
+          <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
+            <a href="#pablo">
+              <span className="self-center leading-relaxed inline-block text-xl uppercase font-bold whitespace-nowrap dark:text-[#38BDF8] text-violet-600">
+                Super-<span className="text-gray-900">Assistant</span>
+              </span>
+            </a>
+            <button
+              className="mr-2 text-2xl md:hidden ease-out duration-200 px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+              type="button"
+              onClick={() => setNavbarOpen(!navbarOpen)}
             >
-              <path
-                fillRule="evenodd"
-                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                clipRule="evenodd"
-              ></path>
-            </svg>
-          </button>
-          <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-            <ul className="flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
-                  aria-current="page"
-                >
-                  Home
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >
-                  About
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >
-                  Services
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >
-                  Contact
-                </a>
-              </li>
+              {!navbarOpen ? (
+                <GiHamburgerMenu />
+              ) : (
+                <BsPlusLg className="rotate-45" />
+              )}
+            </button>
+          </div>
+          <div
+            className={
+              "lg:flex flex-grow items-center " +
+              (navbarOpen ? " flex" : " hidden")
+            }
+            id="example-navbar-danger"
+          >
+            <ul className="flex flex-col md:items-center lg:flex-row list-none lg:ml-auto">
+              {user ? (
+                <>
+                  <li className="nav-item">
+                    <NavLink
+                      to="/home"
+                      className={({ isActive }) =>
+                        isActive ? active : deActive
+                      }
+                    >
+                      Home
+                    </NavLink>
+                  </li>
+                  {userType === "student" && (
+                    <li className="nav-item">
+                      <NavLink
+                        to="/test"
+                        className={({ isActive }) =>
+                          isActive ? active : deActive
+                        }
+                      >
+                        Test
+                      </NavLink>
+                    </li>
+                  )}
+
+                  {userType === "teacher" && (
+                    <li className="nav-item">
+                      <NavLink
+                        to="/create-test"
+                        className={({ isActive }) =>
+                          isActive ? active : deActive
+                        }
+                      >
+                        Create Test
+                      </NavLink>
+                    </li>
+                  )}
+
+                  <li className="nav-item">
+                    <button
+                      onClick={logout}
+                      className="btn bg-red-500 hover:bg-red-600 text-white mt-2 md:mt-0"
+                    >
+                      LOGOUT
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <li className="nav-item">
+                  <Link to="/login">
+                    <button className="btn bg-green-500 hover:bg-green-600 text-white mt-2 md:mt-0">
+                      SING IN
+                    </button>
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>
       </nav>
     </>
   );
-};
-
-export default Navbar;
+}
