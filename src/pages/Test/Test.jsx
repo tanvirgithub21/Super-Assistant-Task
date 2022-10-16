@@ -15,10 +15,13 @@ const Test = () => {
 
   // update score database
   const sourceUpdateDB = async (totalPoint, score) => {
-    await axios.put(`http://localhost:5000/userInfo/${user?.email}`, {
-      totalPoint,
-      score,
-    });
+    await axios.put(
+      `https://super-assistant.herokuapp.com/userInfo/${user?.email}`,
+      {
+        totalPoint,
+        score,
+      }
+    );
   };
 
   const [totalPoint, setTotalPoint] = useState(

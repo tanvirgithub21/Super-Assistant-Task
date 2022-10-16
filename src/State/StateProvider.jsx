@@ -24,7 +24,7 @@ const QuestionStoreProvider = ({ children }) => {
   // post question Data
   const onSubmit = async (data) => {
     await axios
-      .post("http://localhost:5000/question", data)
+      .post("https://super-assistant.herokuapp.com/question", data)
       .then((res) => {
         toast.success("Saved");
         setReFetch(!reFetch);
@@ -37,7 +37,7 @@ const QuestionStoreProvider = ({ children }) => {
   // get all questionData
   useEffect(() => {
     axios
-      .get("http://localhost:5000/question")
+      .get("https://super-assistant.herokuapp.com/question")
       .then((res) => {
         setQuestionData(res.data);
       })
@@ -47,7 +47,7 @@ const QuestionStoreProvider = ({ children }) => {
   // get single question Data by _id
   const deletedQ = async (id) => {
     axios
-      .delete(`http://localhost:5000/question/delete/${id}`)
+      .delete(`https://super-assistant.herokuapp.com/question/delete/${id}`)
       .then((res) => {
         toast.success(res?.data);
         setReFetch(!reFetch);
@@ -58,7 +58,7 @@ const QuestionStoreProvider = ({ children }) => {
   // get user information
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/userInfo/${user?.email}`)
+      .get(`https://super-assistant.herokuapp.com/userInfo/${user?.email}`)
       .then((res) => {
         setUserDataDB(res.data);
       })
@@ -68,7 +68,7 @@ const QuestionStoreProvider = ({ children }) => {
   // get all user information
   useEffect(() => {
     axios
-      .get("http://localhost:5000/userInfo-all")
+      .get("https://super-assistant.herokuapp.com/userInfo-all")
       .then((res) => {
         setAllUserData(res.data);
       })

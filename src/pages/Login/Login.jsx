@@ -21,7 +21,9 @@ const Login = () => {
       .then(async (result) => {
         const user = result.user;
         await axios
-          .put(`http://localhost:5000/login/${user?.email}`, { userType })
+          .put(`https://super-assistant.herokuapp.com/login/${user?.email}`, {
+            userType,
+          })
           .then((res) => {
             res && toast.success("Login Successfully");
             navigate(from, { replace: true });

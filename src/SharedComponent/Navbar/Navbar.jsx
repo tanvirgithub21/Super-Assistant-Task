@@ -34,7 +34,7 @@ export default function Navbar({ fixed }) {
               </span>
             </a>
             <button
-              className="mr-2 text-2xl md:hidden ease-out duration-200 px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+              className="mr-2 text-2xl lg:hidden ease-out duration-200 px-3 py-1 border border-solid border-transparent rounded bg-transparent block outline-none focus:outline-none"
               type="button"
               onClick={() => setNavbarOpen(!navbarOpen)}
             >
