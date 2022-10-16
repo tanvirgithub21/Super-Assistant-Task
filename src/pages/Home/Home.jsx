@@ -24,8 +24,6 @@ const Home = () => {
     });
   }, []);
 
-  console.log("user hit", user);
-
   return (
     <div className="home">
       <div className="bg-[#ffffffe9] w-full h-full">
