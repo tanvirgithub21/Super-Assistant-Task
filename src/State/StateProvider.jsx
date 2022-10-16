@@ -3,22 +3,22 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { createContext } from "react";
 import { toast } from "react-toastify";
-import { onAuthStateChanged } from "firebase/auth";
 import auth from "../firebase.init";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const questionStore = createContext();
 
 const QuestionStoreProvider = ({ children }) => {
   const [questionData, setQuestionData] = useState([]);
+  const [userDataDB, setUserDataDB] = useState({});
   const [user, setUser] = useState({});
   const [reFetch, setReFetch] = useState(true);
 
   // google user status
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setUser(user);
-    }
-  });
+  const [googleUser] = useAuthState(auth);
+  useEffect(() => {
+    setUser(googleUser);
+  }, [googleUser]);
 
   // post question Data
   const onSubmit = async (data) => {
@@ -54,8 +54,18 @@ const QuestionStoreProvider = ({ children }) => {
       .catch((err) => toast.error("Not Deleted"));
   };
 
+  // get user information
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/userInfo/${user?.email}`)
+      .then((res) => {
+        setUserDataDB(res.data);
+      })
+      .catch((err) => toast.error("Something Wrong"));
+  }, [user]);
+
   //this state stored user data  //==> Don't move this one !
-  const userData = { questionData, onSubmit, deletedQ, user };
+  const userData = { questionData, onSubmit, deletedQ, user, userDataDB };
   //user context provider component //==> Don't move this one !
   return (
     <questionStore.Provider value={userData}>{children}</questionStore.Provider>

@@ -1,11 +1,15 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { FaAngleRight } from "react-icons/fa";
 import Lottie from "lottie-web";
 import education from "./education.json";
 import { Link } from "react-router-dom";
 import "./Home.css";
+import { questionStore } from "../../State/StateProvider";
 
 const Home = () => {
+  const { userDataDB, user } = useContext(questionStore);
+  const userType = userDataDB?.userType;
+
   const anime = useRef(null);
   useEffect(() => {
     Lottie.loadAnimation({
@@ -20,6 +24,8 @@ const Home = () => {
     });
   }, []);
 
+  console.log("user hit", user);
+
   return (
     <div className="home">
       <div className="bg-[#ffffffe9] w-full h-full">
@@ -29,18 +35,32 @@ const Home = () => {
           </h3>
 
           <div className="flex items-center mt-10">
-            <Link
-              to="/test"
-              className="btn bg-blue-500 flex items-center justify-start"
-            >
-              Test now <FaAngleRight className="ml-2" />
-            </Link>
-            <Link
-              to="/create-test"
-              className="btn bg-[#8E24AA] hover:bg-[#ae28d3] flex items-center justify-start "
-            >
-              Create Test <FaAngleRight className="ml-2" />
-            </Link>
+            {!user && (
+              <Link
+                to="/login"
+                className="btn bg-blue-500 flex items-center justify-start"
+              >
+                Login Now <FaAngleRight className="ml-2" />
+              </Link>
+            )}
+
+            {userType === "student" && (
+              <Link
+                to="/test"
+                className="btn bg-blue-500 flex items-center justify-start"
+              >
+                Test now <FaAngleRight className="ml-2" />
+              </Link>
+            )}
+
+            {userType === "teacher" && (
+              <Link
+                to="/create-test"
+                className="btn bg-[#8E24AA] hover:bg-[#ae28d3] flex items-center justify-start "
+              >
+                Create Test <FaAngleRight className="ml-2" />
+              </Link>
+            )}
           </div>
 
           {/* lottie icon  */}
