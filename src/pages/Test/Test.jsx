@@ -13,18 +13,12 @@ const Test = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showScore, setShowScore] = useState(false);
 
+  // update score database
   const sourceUpdateDB = async (totalPoint, score) => {
-    await axios
-      .put(`http://localhost:5000/userInfo/${user?.email}`, {
-        totalPoint,
-        score,
-      })
-      .then((res) => {
-        res && toast.success("ok");
-      })
-      .catch((err) => {
-        err.message && toast.error("ree");
-      });
+    await axios.put(`http://localhost:5000/userInfo/${user?.email}`, {
+      totalPoint,
+      score,
+    });
   };
 
   const [totalPoint, setTotalPoint] = useState(

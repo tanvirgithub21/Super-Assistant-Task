@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import auth from "../../firebase.init.js";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
+import Model from "../../SharedComponent/Model/Model.jsx";
 
 const Login = () => {
+  const [openModel, setOpenModel] = useState(false);
+
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.form?.pathname || "/";
@@ -13,13 +16,12 @@ const Login = () => {
   // login user and update data to database
   const googleProvider = new GoogleAuthProvider();
 
-  const googleSingIn = () => {
+  const handleSingIn = (userType) => {
     signInWithPopup(auth, googleProvider)
       .then(async (result) => {
         const user = result.user;
-        console.log(user);
         await axios
-          .put(`http://localhost:5000/userInfo/${user.email}`)
+          .put(`http://localhost:5000/login/${user?.email}`, { userType })
           .then((res) => {
             res && toast.success("Login Successfully");
             navigate(from, { replace: true });
@@ -43,7 +45,7 @@ const Login = () => {
             </p>
 
             <button
-              onClick={googleSingIn}
+              onClick={() => setOpenModel(true)}
               class="focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 dark:border-gray-400 flex items-center w-full mt-10"
             >
               <svg
@@ -77,6 +79,13 @@ const Login = () => {
           </div>
         </div>
       </div>
+      {openModel && (
+        <Model
+          setOpenModel={setOpenModel}
+          openModel={openModel}
+          handleSingIn={handleSingIn}
+        />
+      )}
     </div>
   );
 };
